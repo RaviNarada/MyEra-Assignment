@@ -19,7 +19,7 @@ A boundary-pushing mini-app built with **React + Konva** for the ultimate sticke
 ```bash
 npm install
 npm start
-
+```
 ## 🎥 Demo Video
 
 A walkthrough of the assignment implementation is available here:
