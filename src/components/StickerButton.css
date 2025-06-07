@@ -1,0 +1,11 @@
+.sticker-button {
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: transform 0.2s;
+}
+.sticker-button:hover {
+  transform: scale(1.1);
+}
