@@ -19,17 +19,22 @@ const Sticker = ({ sticker, onDragEnd, onDblClick }) => {
       height={STICKER_SIZE}
       draggable
       onDragEnd={(e) =>
-        onDragEnd(sticker.id, snapToGrid(e.target.x()), snapToGrid(e.target.y()))
+        onDragEnd(
+          sticker.id,
+          snapToGrid(e.target.x()),
+          snapToGrid(e.target.y())
+        )
       }
       onDblClick={() => onDblClick(sticker.id)}
     />
   );
 };
 
-const Canvas = ({ stickers, onDragEnd, onDelete }) => {
+const Canvas = ({ stickers = [], onDragEnd, onDelete }) => {
   const stageRef = useRef();
 
   const handleDownload = () => {
+    if (!stageRef.current) return;
     const uri = stageRef.current.toDataURL({ pixelRatio: 2 });
     const link = document.createElement("a");
     link.download = "myera-canvas.png";
@@ -43,7 +48,7 @@ const Canvas = ({ stickers, onDragEnd, onDelete }) => {
     <div className="canvas-container">
       <Stage width={600} height={400} ref={stageRef} className="canvas-stage">
         <Layer>
-          {stickers.map((sticker) => (
+          {stickers && stickers.length > 0 && stickers.map((sticker) => (
             <Sticker
               key={sticker.id}
               sticker={sticker}

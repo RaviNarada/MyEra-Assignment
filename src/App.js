@@ -1,47 +1,51 @@
+
 import React, { useState } from "react";
-import StickerButton from "./components/StickerButton";
 import Canvas from "./components/Canvas";
+import StickerButton from "./components/StickerButton";
 import "./App.css";
 
-const initialStickers = [
-  "/stickers/sticker1.png",
-  "/stickers/sticker2.png",
-  "/stickers/sticker3.png",
-];
-
-function App() {
+const App = () => {
   const [stickers, setStickers] = useState([]);
 
   const handleAddSticker = (src) => {
-    const id = Date.now();
-    setStickers([
-      ...stickers,
-      { id, src, x: 40, y: 40 },
-    ]);
+    const newSticker = {
+      id: Date.now(), // Unique ID
+      src,
+      x: 0,
+      y: 0
+    };
+    setStickers((prev) => [...prev, newSticker]);
   };
 
   const handleDragEnd = (id, x, y) => {
-    setStickers(stickers.map((s) => (s.id === id ? { ...s, x, y } : s)));
+    setStickers((prev) =>
+      prev.map((sticker) =>
+        sticker.id === id ? { ...sticker, x, y } : sticker
+      )
+    );
   };
 
   const handleDelete = (id) => {
-    setStickers(stickers.filter((s) => s.id !== id));
+    setStickers((prev) => prev.filter((sticker) => sticker.id !== id));
   };
 
   return (
     <div className="app">
-      <div className="toolbar">
-        {initialStickers.map((src, i) => (
-          <StickerButton key={i} src={src} onClick={handleAddSticker} />
-        ))}
+      <h1>🎨 MyEra Sticker Canvas</h1>
+      <div className="sticker-palette">
+        <StickerButton src="/stickers/sticker1.png" onClick={handleAddSticker} />
+        <StickerButton src="/stickers/sticker2.png" onClick={handleAddSticker} />
+        <StickerButton src="/stickers/sticker3.png" onClick={handleAddSticker} />
       </div>
-      <Canvas
-        stickers={stickers}
-        onDragEnd={handleDragEnd}
-        onDelete={handleDelete}
-      />
+      <main>
+        <Canvas
+          stickers={stickers}
+          onDragEnd={handleDragEnd}
+          onDelete={handleDelete}
+        />
+      </main>
     </div>
   );
-}
+};
 
 export default App;
